@@ -1,1 +1,18 @@
 #gateway-service.yaml
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # Tự động map service name thành route
+          lower-case-service-id: true
+      routes:
+        - id: identity-service
+          uri: lb://identity-service # lb = Load Balancer (qua Eureka)
+          predicates:
+            - Path=/api/v1/auth/**, /api/v1/users/**
+
+        - id: post-service
+          uri: lb://post-service
+          predicates:
+            - Path=/api/v1/posts/**
