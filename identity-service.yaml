@@ -1,0 +1,33 @@
+server:
+  port: 8081 # Identity chạy port này
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/social_identity_db
+    username: social_user
+    password: social_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  # Cấu hình Google Auth (Bạn cần tạo app trên Google Cloud Console để lấy ID/Secret)
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: YOUR_GOOGLE_CLIENT_ID
+            client-secret: YOUR_GOOGLE_CLIENT_SECRET
+            scope: email, profile
+
+# Cấu hình JWT Custom
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970 # Chuỗi 256-bit hex ngẫu nhiên
+  expiration: 86400000 # 1 ngày (ms)
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
